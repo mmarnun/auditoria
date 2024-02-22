@@ -25,7 +25,30 @@
 
 ### 1. Activa desde SQL*Plus la auditoría de los intentos de acceso exitosos al sistema. Comprueba su funcionamiento.
 
+```sql
+SQL> select name, VALUE
+  2  from v$parameter 
+  3  where name like 'audit_trail';
 
+NAME
+--------------------------------------------------------------------------------
+VALUE
+--------------------------------------------------------------------------------
+audit_trail
+NONE
+```
+
+```sql
+SQL> alter system set audit_trail=db scope=spfile;
+
+System altered.
+```
+
+Reiniciar base de datos
+```sql
+shutdown immediate;
+startup;
+```
 
 ### 2. Realiza un procedimiento en PL/SQL que te muestre los accesos fallidos junto con el motivo de los mismos, transformando el código de error almacenado en un mensaje de texto comprensible. Contempla todos los motivos posibles para que un acceso sea fallido.
 
@@ -58,4 +81,4 @@
 
 
 
-### 10. Averigua si en MongoDB se pueden auditar los accesos a una colección concreta. Demuestra su funcio
+### 10. Averigua si en MongoDB se pueden auditar los accesos a una colección concreta. Demuestra su funcionamiento.
